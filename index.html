@@ -26,7 +26,6 @@
       white-space: pre;
     }
     #areaNamePopup {
-      display: none;
       position: fixed;
       top: 50%;
       left: 50%;
@@ -49,26 +48,22 @@
   <h1>Pedestrian Counter</h1>
   <div id="counter">0</div>
   <button onclick="increment()">Count</button>
-  <button onclick="reset()">Reset</button>
   <button onclick="exportCSV()">Export CSV</button>
   <div id="log"></div>
 
   <script>
     let count = 0;
     let logData = []; // Array to store timestamp and count
-    let areaName = localStorage.getItem("areaName"); // Get saved area name
+    let areaName = null; // Area name (not stored in localStorage)
 
-    // Show area name popup if no area name is saved
-    if (!areaName) {
-      document.getElementById("areaNamePopup").style.display = "block";
-    }
+    // Show area name popup on page load
+    document.getElementById("areaNamePopup").style.display = "block";
 
     // Function to save area name
     function saveAreaName() {
       const input = document.getElementById("areaNameInput").value.trim();
       if (input) {
         areaName = input;
-        localStorage.setItem("areaName", areaName); // Save to localStorage
         document.getElementById("areaNamePopup").style.display = "none";
       } else {
         alert("Please enter a valid area name.");
@@ -85,13 +80,6 @@
       count++;
       const timestamp = new Date().toLocaleString(); // Get current time
       logData.push([timestamp, count]); // Add timestamp and count to log
-      updateDisplay();
-    }
-
-    // Function to reset the count and log
-    function reset() {
-      count = 0;
-      logData = [];
       updateDisplay();
     }
 
