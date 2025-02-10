@@ -56,14 +56,26 @@
     let logData = []; // Array to store timestamp and count
     let areaName = null; // Area name (not stored in localStorage)
 
-    // Show area name popup on page load
-    document.getElementById("areaNamePopup").style.display = "block";
+    // Load count from localStorage on page load
+    if (localStorage.getItem('pedestrianCount')) {
+      count = parseInt(localStorage.getItem('pedestrianCount'));
+    }
+
+    // Load area name from localStorage
+    if (localStorage.getItem('areaName')) {
+        areaName = localStorage.getItem('areaName');
+    } else {
+        document.getElementById("areaNamePopup").style.display = "block";
+    }
+
+    updateDisplay();  // Initial display update
 
     // Function to save area name
     function saveAreaName() {
       const input = document.getElementById("areaNameInput").value.trim();
       if (input) {
         areaName = input;
+        localStorage.setItem('areaName', areaName); // Save to localStorage
         document.getElementById("areaNamePopup").style.display = "none";
       } else {
         alert("Please enter a valid area name.");
@@ -78,6 +90,7 @@
         return;
       }
       count++;
+      localStorage.setItem('pedestrianCount', count); // Save to localStorage
       const timestamp = new Date().toLocaleString(); // Get current time
       logData.push([timestamp, count]); // Add timestamp and count to log
       updateDisplay();
