@@ -56,9 +56,10 @@
     let logData = []; // Array to store timestamp and count
     let areaName = null; // Area name (not stored in localStorage)
 
-    // Load count from localStorage on page load
-    if (localStorage.getItem('pedestrianCount')) {
-      count = parseInt(localStorage.getItem('pedestrianCount'));
+    // Load data from localStorage on page load
+    if (localStorage.getItem('pedestrianData')) {
+      logData = JSON.parse(localStorage.getItem('pedestrianData'));
+      count = logData.length > 0 ? logData[logData.length - 1][1] : 0; // Get last count
     }
 
     // Load area name from localStorage
@@ -90,9 +91,9 @@
         return;
       }
       count++;
-      localStorage.setItem('pedestrianCount', count); // Save to localStorage
       const timestamp = new Date().toLocaleString(); // Get current time
       logData.push([timestamp, count]); // Add timestamp and count to log
+      localStorage.setItem('pedestrianData', JSON.stringify(logData)); // Save to localStorage
       updateDisplay();
     }
 
