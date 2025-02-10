@@ -25,9 +25,27 @@
       font-family: monospace;
       white-space: pre;
     }
+    #areaNamePopup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
+  <div id="areaNamePopup">
+    <h2>Welcome to the Pedestrian Counter</h2>
+    <p>Please enter the area name:</p>
+    <input type="text" id="areaNameInput" placeholder="Enter area name">
+    <button onclick="saveAreaName()">Save</button>
+  </div>
+
   <h1>Pedestrian Counter</h1>
   <div id="counter">0</div>
   <button onclick="increment()">Count</button>
@@ -38,9 +56,32 @@
   <script>
     let count = 0;
     let logData = []; // Array to store timestamp and count
+    let areaName = localStorage.getItem("areaName"); // Get saved area name
+
+    // Show area name popup if no area name is saved
+    if (!areaName) {
+      document.getElementById("areaNamePopup").style.display = "block";
+    }
+
+    // Function to save area name
+    function saveAreaName() {
+      const input = document.getElementById("areaNameInput").value.trim();
+      if (input) {
+        areaName = input;
+        localStorage.setItem("areaName", areaName); // Save to localStorage
+        document.getElementById("areaNamePopup").style.display = "none";
+      } else {
+        alert("Please enter a valid area name.");
+      }
+    }
 
     // Function to increment the count
     function increment() {
+      if (!areaName) {
+        alert("Please enter an area name first.");
+        document.getElementById("areaNamePopup").style.display = "block";
+        return;
+      }
       count++;
       const timestamp = new Date().toLocaleString(); // Get current time
       logData.push([timestamp, count]); // Add timestamp and count to log
@@ -69,6 +110,12 @@
         return;
       }
 
+      if (!areaName) {
+        alert("Please enter an area name first.");
+        document.getElementById("areaNamePopup").style.display = "block";
+        return;
+      }
+
       // Create CSV content
       const csvContent = "data:text/csv;charset=utf-8," +
         "Timestamp,Count\n" +
@@ -78,7 +125,7 @@
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "tally_data.csv");
+      link.setAttribute("download", `${areaName}_tally_data.csv`); // Use area name in filename
       document.body.appendChild(link);
       link.click(); // Trigger the download
       document.body.removeChild(link); // Clean up
