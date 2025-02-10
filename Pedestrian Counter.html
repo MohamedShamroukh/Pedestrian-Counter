@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedestrian Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #counter {
+      font-size: 3em;
+      margin: 20px;
+    }
+    button {
+      font-size: 1.5em;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    #log {
+      margin-top: 20px;
+      font-family: monospace;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pedestrian Counter</h1>
+  <div id="counter">0</div>
+  <button onclick="increment()">Count</button>
+  <button onclick="reset()">Reset</button>
+  <button onclick="exportCSV()">Export CSV</button>
+  <div id="log"></div>
+
+  <script>
+    let count = 0;
+    let logData = []; // Array to store timestamp and count
+
+    // Function to increment the count
+    function increment() {
+      count++;
+      const timestamp = new Date().toLocaleString(); // Get current time
+      logData.push([timestamp, count]); // Add timestamp and count to log
+      updateDisplay();
+    }
+
+    // Function to reset the count and log
+    function reset() {
+      count = 0;
+      logData = [];
+      updateDisplay();
+    }
+
+    // Function to update the display
+    function updateDisplay() {
+      document.getElementById("counter").textContent = count;
+      document.getElementById("log").textContent = logData
+        .map((entry) => `${entry[0]} - Count: ${entry[1]}`)
+        .join("\n");
+    }
+
+    // Function to export data as CSV
+    function exportCSV() {
+      if (logData.length === 0) {
+        alert("No data to export!");
+        return;
+      }
+
+      // Create CSV content
+      const csvContent = "data:text/csv;charset=utf-8," +
+        "Timestamp,Count\n" +
+        logData.map((entry) => entry.join(",")).join("\n");
+
+      // Create a download link
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "tally_data.csv");
+      document.body.appendChild(link);
+      link.click(); // Trigger the download
+      document.body.removeChild(link); // Clean up
+    }
+  </script>
+</body>
+</html>
