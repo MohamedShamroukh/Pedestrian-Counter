@@ -113,7 +113,7 @@
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `${areaName}_tally_data.csv`); // Use area name in filename
+      link.setAttribute("download", `${areaName}_pedestrian_data.csv`); // Use area name in filename
       document.body.appendChild(link);
       link.click(); // Trigger the download
       document.body.removeChild(link); // Clean up
