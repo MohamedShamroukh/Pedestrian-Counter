@@ -49,6 +49,7 @@
   <div id="counter">0</div>
   <button onclick="increment()">Count</button>
   <button onclick="exportCSV()">Export CSV</button>
+  <button onclick="resetCounter()">Reset</button> <!-- Reset Button -->
   <div id="log"></div>
 
   <script>
@@ -131,6 +132,19 @@
       document.body.appendChild(link);
       link.click(); // Trigger the download
       document.body.removeChild(link); // Clean up
+    }
+
+    // Function to reset the counter
+    function resetCounter() {
+      if (logData.length > 0) {
+        exportCSV(); // Export data first
+      }
+
+      // Clear data and reset count
+      logData = [];
+      count = 0;
+      localStorage.removeItem('pedestrianData'); // Clear log data
+      updateDisplay();
     }
   </script>
 </body>
