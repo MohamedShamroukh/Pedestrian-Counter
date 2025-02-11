@@ -47,7 +47,9 @@ m.shamroukh@lboro.ac.uk
 ## Example CSV Output
 
 The exported CSV file will contain the following columns:
+
 Timestamp,Count
+
 2024-10-27T10:00:00,1
 
 2024-10-27T10:01:00,2
