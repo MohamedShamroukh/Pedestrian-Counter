@@ -6,25 +6,53 @@
   <title>Pedestrian Counter</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       text-align: center;
-      margin-top: 50px;
-    }
-    #counter {
-      font-size: 3em;
       margin: 20px;
+      background-color: #f4f4f4;
     }
+
+    h1 {
+      color: #333;
+    }
+
+    #counter {
+      font-size: 2.5em;
+      margin: 20px 0;
+      color: #007bff; /* A more prominent color */
+    }
+
     button {
-      font-size: 1.5em;
-      padding: 10px 20px;
-      margin: 10px;
+      font-size: 1.2em;
+      padding: 12px 24px;
+      margin: 8px;
       cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      background-color: #007bff;
+      transition: background-color 0.3s ease; /* Smooth transition */
     }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    button:active {
+      background-color: #004085;  /* Darker shade when clicked */
+    }
+
     #log {
       margin-top: 20px;
       font-family: monospace;
       white-space: pre;
+      background-color: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: left;
+      overflow-x: auto; /* Add horizontal scroll if log is too wide */
     }
+
     #areaNamePopup {
       position: fixed;
       top: 50%;
@@ -34,7 +62,24 @@
       padding: 20px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       z-index: 1000;
+      border-radius: 5px;
     }
+
+    #areaNamePopup input[type="text"] {
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #areaNamePopup button {
+      background-color: #28a745; /* Green color for save button */
+    }
+
+    #areaNamePopup button:hover {
+      background-color: #218838;
+    }
+
   </style>
 </head>
 <body>
@@ -49,18 +94,18 @@
   <div id="counter">0</div>
   <button onclick="increment()">Count</button>
   <button onclick="exportCSV()">Export CSV</button>
-  <button onclick="resetCounter()">Reset</button> <!-- Reset Button -->
+  <button onclick="resetCounter()">Reset</button>
   <div id="log"></div>
 
   <script>
     let count = 0;
-    let logData = []; // Array to store timestamp and count
-    let areaName = null; // Area name (not stored in localStorage)
+    let logData = [];
+    let areaName = null;
 
-    // Load data from localStorage on page load
+    // Load data from localStorage
     if (localStorage.getItem('pedestrianData')) {
       logData = JSON.parse(localStorage.getItem('pedestrianData'));
-      count = logData.length > 0 ? logData[logData.length - 1][1] : 0; // Get last count
+      count = logData.length > 0 ? logData[logData.length - 1][1] : 0;
     }
 
     // Load area name from localStorage
@@ -70,14 +115,14 @@
         document.getElementById("areaNamePopup").style.display = "block";
     }
 
-    updateDisplay();  // Initial display update
+    updateDisplay();
 
     // Function to save area name
     function saveAreaName() {
       const input = document.getElementById("areaNameInput").value.trim();
       if (input) {
         areaName = input;
-        localStorage.setItem('areaName', areaName); // Save to localStorage
+        localStorage.setItem('areaName', areaName);
         document.getElementById("areaNamePopup").style.display = "none";
       } else {
         alert("Please enter a valid area name.");
@@ -92,9 +137,9 @@
         return;
       }
       count++;
-      const timestamp = new Date().toLocaleString(); // Get current time
-      logData.push([timestamp, count]); // Add timestamp and count to log
-      localStorage.setItem('pedestrianData', JSON.stringify(logData)); // Save to localStorage
+      const timestamp = new Date().toLocaleString();
+      logData.push([timestamp, count]);
+      localStorage.setItem('pedestrianData', JSON.stringify(logData));
       updateDisplay();
     }
 
@@ -119,31 +164,28 @@
         return;
       }
 
-      // Create CSV content
       const csvContent = "data:text/csv;charset=utf-8," +
         "Timestamp,Count\n" +
         logData.map((entry) => entry.join(",")).join("\n");
 
-      // Create a download link
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `${areaName}_pedestrian_data.csv`); // Use area name in filename
+      link.setAttribute("download", `${areaName}_pedestrian_data.csv`);
       document.body.appendChild(link);
-      link.click(); // Trigger the download
-      document.body.removeChild(link); // Clean up
+      link.click();
+      document.body.removeChild(link);
     }
 
     // Function to reset the counter
     function resetCounter() {
       if (logData.length > 0) {
-        exportCSV(); // Export data first
+        exportCSV();
       }
 
-      // Clear data and reset count
       logData = [];
       count = 0;
-      localStorage.removeItem('pedestrianData'); // Clear log data
+      localStorage.removeItem('pedestrianData');
       updateDisplay();
     }
   </script>
