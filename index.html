@@ -6,51 +6,66 @@
   <title>Pedestrian Counter</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A more elegant font */
       text-align: center;
-      margin: 20px;
-      background-color: #f4f4f4;
+      margin: 0; /* Remove default body margin */
+      background-color: #f8f9fa; /* Very light gray background */
+      color: #495057; /* Dark gray text */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensure full viewport height */
+    }
+
+    main {
+      padding: 30px; /* Add padding to the main content area */
+      flex: 1; /* Allow main to grow and fill the space */
     }
 
     h1 {
-      color: #333;
+      color: #343a40; /* Darker header color */
+      margin-bottom: 20px;
     }
 
     #counter {
-      font-size: 2.5em;
+      font-size: 3em;
       margin: 20px 0;
-      color: #007bff; /* A more prominent color */
+      color: #007bff; /* Still a prominent color, but more integrated */
+      font-weight: 500; /* Slightly bolder */
     }
 
     button {
-      font-size: 1.2em;
+      font-size: 1.1em; /* Slightly smaller button text */
       padding: 12px 24px;
-      margin: 8px;
+      margin: 5px; /* Smaller margins */
       cursor: pointer;
       border: none;
-      border-radius: 5px;
+      border-radius: 0.25rem; /* More subtle rounded corners */
       color: white;
       background-color: #007bff;
-      transition: background-color 0.3s ease; /* Smooth transition */
+      transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out; /* Smoother transition */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     }
 
     button:hover {
       background-color: #0056b3;
+      transform: translateY(-2px); /* Slight lift on hover */
     }
 
     button:active {
-      background-color: #004085;  /* Darker shade when clicked */
+      background-color: #004085;
+      transform: translateY(0); /* Reset transform when active */
     }
 
     #log {
       margin-top: 20px;
-      font-family: monospace;
+      font-family: 'Courier New', monospace; /* More readable monospace font */
       white-space: pre;
-      background-color: #eee;
-      padding: 10px;
-      border-radius: 5px;
+      background-color: #fff; /* White log background */
+      padding: 15px;
+      border-radius: 0.25rem;
       text-align: left;
-      overflow-x: auto; /* Add horizontal scroll if log is too wide */
+      overflow-x: auto;
+      border: 1px solid #ced4da; /* Light gray border */
     }
 
     #areaNamePopup {
@@ -58,26 +73,45 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      padding: 25px; /* More padding */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
       z-index: 1000;
-      border-radius: 5px;
+      border-radius: 0.5rem; /* More rounded corners */
+      text-align: left; /* Align text to the left within the popup */
+    }
+
+    #areaNamePopup h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.5em; /* Slightly larger heading */
     }
 
     #areaNamePopup input[type="text"] {
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      width: 100%; /* Full width */
+      box-sizing: border-box; /* Include padding in width calculation */
     }
 
     #areaNamePopup button {
       background-color: #28a745; /* Green color for save button */
+      font-size: 1em;
+      padding: 10px 20px;
     }
 
     #areaNamePopup button:hover {
       background-color: #218838;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.8em;
     }
 
   </style>
@@ -90,12 +124,19 @@
     <button onclick="saveAreaName()">Save</button>
   </div>
 
-  <h1>Pedestrian Counter</h1>
-  <div id="counter">0</div>
-  <button onclick="increment()">Count</button>
-  <button onclick="exportCSV()">Export CSV</button>
-  <button onclick="resetCounter()">Reset</button>
-  <div id="log"></div>
+  <main>
+    <h1>Pedestrian Counter</h1>
+    <div id="counter">0</div>
+    <button onclick="increment()">Count</button>
+    <button onclick="exportCSV()">Export CSV</button>
+    <button onclick="resetCounter()">Reset</button>
+    <div id="log"></div>
+  </main>
+
+  <footer>
+    © 2024 Pedestrian Counter
+  </footer>
+
 
   <script>
     let count = 0;
