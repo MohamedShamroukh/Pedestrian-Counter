@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pedestrian Counter</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     /* Global Styles */
     body {
@@ -24,15 +25,15 @@
 
     h1 {
       color: #343a40;
-      margin-bottom: 10px; /* Reduced margin */
+      margin-bottom: 10px;
       font-size: 2em;
     }
 
     /* Area Name Display */
     #areaNameDisplay {
       font-size: 1.2em;
-      margin-bottom: 20px; /* Space between area name and counter */
-      color: #6c757d; /* Muted color */
+      margin-bottom: 20px;
+      color: #6c757d;
     }
 
     #counter {
@@ -136,7 +137,22 @@
       text-align: center;
       padding: 10px;
       font-size: 0.7em;
+      display: flex;
+      justify-content: center; /* Center the content horizontally */
+      align-items: center;     /* Center the content vertically */
     }
+
+    footer a {
+        color: #fff; /* Make sure the link is visible */
+        text-decoration: none; /* Remove underline */
+        margin-left: 10px; /* Add some space between the copyright and the icon */
+    }
+
+    /* Style the GitHub icon */
+    .github-icon {
+        font-size: 1.2em; /* Adjust the size of the icon */
+    }
+
 
     /* Media Query for Larger Screens (Tablets and Desktops) */
     @media (min-width: 768px) {
@@ -179,7 +195,7 @@
 
   <main>
     <h1>Pedestrian Counter</h1>
-    <div id="areaNameDisplay"></div>  <!-- Area Name Display -->
+    <div id="areaNameDisplay"></div>
     <div id="counter">0</div>
     <button onclick="increment()">Count</button>
     <button onclick="exportCSV()">Export CSV</button>
@@ -189,6 +205,9 @@
 
   <footer>
     © 2024 Mohamed Shamroukh (m.shamroukh@lboro.ac.uk)
+    <a href="https://github.com/MohamedShamroukh/Pedestrian-Counter/tree/main" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-github github-icon"></i>
+    </a>
   </footer>
 
   <script>
@@ -209,7 +228,7 @@
         document.getElementById("areaNamePopup").style.display = "block";
     }
 
-    updateDisplay(); // Initial display update including area name
+    updateDisplay();
 
     // Function to save area name
     function saveAreaName() {
@@ -218,7 +237,7 @@
         areaName = input;
         localStorage.setItem('areaName', areaName);
         document.getElementById("areaNamePopup").style.display = "none";
-        updateAreaNameDisplay(); // Update display after saving
+        updateAreaNameDisplay();
       } else {
         alert("Please enter a valid area name.");
       }
@@ -244,7 +263,7 @@
       document.getElementById("log").textContent = logData
         .map((entry) => `${entry[0]} - Count: ${entry[1]}`)
         .join("\n");
-      updateAreaNameDisplay();  // Make sure area name is always updated
+      updateAreaNameDisplay();
     }
 
     // Function to update the area name display
@@ -254,7 +273,6 @@
 
     // Call updateAreaNameDisplay() on initial page load to show area name if it exists
     updateAreaNameDisplay();
-
 
     // Function to export data as CSV
     function exportCSV() {
