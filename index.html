@@ -15,7 +15,7 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      padding: 20px; /* Add padding on the sides for phones */
+      padding: 20px;
     }
 
     main {
@@ -24,12 +24,19 @@
 
     h1 {
       color: #343a40;
-      margin-bottom: 20px;
-      font-size: 2em; /* Make the heading larger on phones */
+      margin-bottom: 10px; /* Reduced margin */
+      font-size: 2em;
+    }
+
+    /* Area Name Display */
+    #areaNameDisplay {
+      font-size: 1.2em;
+      margin-bottom: 20px; /* Space between area name and counter */
+      color: #6c757d; /* Muted color */
     }
 
     #counter {
-      font-size: 4em; /* Make the counter larger on phones */
+      font-size: 4em;
       margin: 20px 0;
       color: #007bff;
       font-weight: 500;
@@ -37,9 +44,9 @@
 
     /* Button Styles */
     button {
-      font-size: 1.2em; /* Larger buttons for touch */
-      padding: 15px 30px; /* Larger padding */
-      margin: 10px; /* More margin */
+      font-size: 1.2em;
+      padding: 15px 30px;
+      margin: 10px;
       cursor: pointer;
       border: none;
       border-radius: 0.25rem;
@@ -47,8 +54,8 @@
       background-color: #007bff;
       transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      width: calc(100% - 20px); /* Buttons take full width */
-      max-width: 300px; /* But don't get too wide on larger phones */
+      width: calc(100% - 20px);
+      max-width: 300px;
     }
 
     button:hover {
@@ -72,7 +79,7 @@
       text-align: left;
       overflow-x: auto;
       border: 1px solid #ced4da;
-      font-size: 0.9em; /* Make the log text smaller on phones */
+      font-size: 0.9em;
     }
 
     /* Area Name Popup Styles */
@@ -87,18 +94,18 @@
       z-index: 1000;
       border-radius: 0.5rem;
       text-align: left;
-      width: 80%; /* Take up more width on phones */
-      max-width: 400px; /* But limit the width on tablets */
+      width: 80%;
+      max-width: 400px;
     }
 
     #areaNamePopup h2 {
       margin-top: 0;
       margin-bottom: 15px;
-      font-size: 1.3em; /* Adjusted font size for phone */
+      font-size: 1.3em;
     }
 
     #areaNamePopup p {
-      font-size: 1em; /* Adjusted font size for phone */
+      font-size: 1em;
     }
 
     #areaNamePopup input[type="text"] {
@@ -108,14 +115,14 @@
       border-radius: 0.25rem;
       width: 100%;
       box-sizing: border-box;
-      font-size: 1em; /* Ensure input text is readable */
+      font-size: 1em;
     }
 
     #areaNamePopup button {
       background-color: #28a745;
       font-size: 1.1em;
       padding: 12px 24px;
-      width: auto; /* Let the button size adjust to its content */
+      width: auto;
     }
 
     #areaNamePopup button:hover {
@@ -128,27 +135,27 @@
       color: #fff;
       text-align: center;
       padding: 10px;
-      font-size: 0.7em; /* Footer text smaller on phones */
+      font-size: 0.7em;
     }
 
     /* Media Query for Larger Screens (Tablets and Desktops) */
     @media (min-width: 768px) {
       body {
-        padding: 30px; /* Restore larger padding on desktop */
+        padding: 30px;
       }
 
       h1 {
-        font-size: 3em; /* Restore larger heading size on desktop */
+        font-size: 3em;
       }
 
       #areaNamePopup {
-        width: auto; /* Remove phone-specific width */
-        max-width: 500px; /* Set a maximum width for larger screens */
+        width: auto;
+        max-width: 500px;
       }
 
       button {
-        width: auto; /* Remove phone-specific width */
-        max-width: none; /* Remove max-width restriction */
+        width: auto;
+        max-width: none;
       }
 
       #log {
@@ -172,6 +179,7 @@
 
   <main>
     <h1>Pedestrian Counter</h1>
+    <div id="areaNameDisplay"></div>  <!-- Area Name Display -->
     <div id="counter">0</div>
     <button onclick="increment()">Count</button>
     <button onclick="exportCSV()">Export CSV</button>
@@ -201,7 +209,7 @@
         document.getElementById("areaNamePopup").style.display = "block";
     }
 
-    updateDisplay();
+    updateDisplay(); // Initial display update including area name
 
     // Function to save area name
     function saveAreaName() {
@@ -210,6 +218,7 @@
         areaName = input;
         localStorage.setItem('areaName', areaName);
         document.getElementById("areaNamePopup").style.display = "none";
+        updateAreaNameDisplay(); // Update display after saving
       } else {
         alert("Please enter a valid area name.");
       }
@@ -235,7 +244,17 @@
       document.getElementById("log").textContent = logData
         .map((entry) => `${entry[0]} - Count: ${entry[1]}`)
         .join("\n");
+      updateAreaNameDisplay();  // Make sure area name is always updated
     }
+
+    // Function to update the area name display
+    function updateAreaNameDisplay() {
+      document.getElementById("areaNameDisplay").textContent = areaName ? `Area: ${areaName}` : "";
+    }
+
+    // Call updateAreaNameDisplay() on initial page load to show area name if it exists
+    updateAreaNameDisplay();
+
 
     // Function to export data as CSV
     function exportCSV() {
