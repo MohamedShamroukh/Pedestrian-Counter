@@ -5,113 +5,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pedestrian Counter</title>
   <style>
+    /* Global Styles */
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A more elegant font */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      margin: 0; /* Remove default body margin */
-      background-color: #f8f9fa; /* Very light gray background */
-      color: #495057; /* Dark gray text */
+      margin: 0;
+      background-color: #f8f9fa;
+      color: #495057;
       display: flex;
       flex-direction: column;
-      min-height: 100vh; /* Ensure full viewport height */
+      min-height: 100vh;
+      padding: 20px; /* Add padding on the sides for phones */
     }
 
     main {
-      padding: 30px; /* Add padding to the main content area */
-      flex: 1; /* Allow main to grow and fill the space */
+      flex: 1;
     }
 
     h1 {
-      color: #343a40; /* Darker header color */
+      color: #343a40;
       margin-bottom: 20px;
+      font-size: 2em; /* Make the heading larger on phones */
     }
 
     #counter {
-      font-size: 3em;
+      font-size: 4em; /* Make the counter larger on phones */
       margin: 20px 0;
-      color: #007bff; /* Still a prominent color, but more integrated */
-      font-weight: 500; /* Slightly bolder */
+      color: #007bff;
+      font-weight: 500;
     }
 
+    /* Button Styles */
     button {
-      font-size: 1.1em; /* Slightly smaller button text */
-      padding: 12px 24px;
-      margin: 5px; /* Smaller margins */
+      font-size: 1.2em; /* Larger buttons for touch */
+      padding: 15px 30px; /* Larger padding */
+      margin: 10px; /* More margin */
       cursor: pointer;
       border: none;
-      border-radius: 0.25rem; /* More subtle rounded corners */
+      border-radius: 0.25rem;
       color: white;
       background-color: #007bff;
-      transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out; /* Smoother transition */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: calc(100% - 20px); /* Buttons take full width */
+      max-width: 300px; /* But don't get too wide on larger phones */
     }
 
     button:hover {
       background-color: #0056b3;
-      transform: translateY(-2px); /* Slight lift on hover */
+      transform: translateY(-2px);
     }
 
     button:active {
       background-color: #004085;
-      transform: translateY(0); /* Reset transform when active */
+      transform: translateY(0);
     }
 
+    /* Log Area Styles */
     #log {
       margin-top: 20px;
-      font-family: 'Courier New', monospace; /* More readable monospace font */
+      font-family: 'Courier New', monospace;
       white-space: pre;
-      background-color: #fff; /* White log background */
+      background-color: #fff;
       padding: 15px;
       border-radius: 0.25rem;
       text-align: left;
       overflow-x: auto;
-      border: 1px solid #ced4da; /* Light gray border */
+      border: 1px solid #ced4da;
+      font-size: 0.9em; /* Make the log text smaller on phones */
     }
 
+    /* Area Name Popup Styles */
     #areaNamePopup {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: #fff;
-      padding: 25px; /* More padding */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
       z-index: 1000;
-      border-radius: 0.5rem; /* More rounded corners */
-      text-align: left; /* Align text to the left within the popup */
+      border-radius: 0.5rem;
+      text-align: left;
+      width: 80%; /* Take up more width on phones */
+      max-width: 400px; /* But limit the width on tablets */
     }
 
     #areaNamePopup h2 {
       margin-top: 0;
       margin-bottom: 15px;
-      font-size: 1.5em; /* Slightly larger heading */
+      font-size: 1.3em; /* Adjusted font size for phone */
+    }
+
+    #areaNamePopup p {
+      font-size: 1em; /* Adjusted font size for phone */
     }
 
     #areaNamePopup input[type="text"] {
-      padding: 10px;
+      padding: 12px;
       margin-bottom: 20px;
       border: 1px solid #ced4da;
       border-radius: 0.25rem;
-      width: 100%; /* Full width */
-      box-sizing: border-box; /* Include padding in width calculation */
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 1em; /* Ensure input text is readable */
     }
 
     #areaNamePopup button {
-      background-color: #28a745; /* Green color for save button */
-      font-size: 1em;
-      padding: 10px 20px;
+      background-color: #28a745;
+      font-size: 1.1em;
+      padding: 12px 24px;
+      width: auto; /* Let the button size adjust to its content */
     }
 
     #areaNamePopup button:hover {
       background-color: #218838;
     }
 
+    /* Footer Styles */
     footer {
       background-color: #343a40;
       color: #fff;
       text-align: center;
       padding: 10px;
-      font-size: 0.8em;
+      font-size: 0.7em; /* Footer text smaller on phones */
+    }
+
+    /* Media Query for Larger Screens (Tablets and Desktops) */
+    @media (min-width: 768px) {
+      body {
+        padding: 30px; /* Restore larger padding on desktop */
+      }
+
+      h1 {
+        font-size: 3em; /* Restore larger heading size on desktop */
+      }
+
+      #areaNamePopup {
+        width: auto; /* Remove phone-specific width */
+        max-width: 500px; /* Set a maximum width for larger screens */
+      }
+
+      button {
+        width: auto; /* Remove phone-specific width */
+        max-width: none; /* Remove max-width restriction */
+      }
+
+      #log {
+        font-size: 1em;
+      }
+
+      footer {
+        font-size: 0.8em;
+      }
     }
 
   </style>
@@ -134,9 +180,8 @@
   </main>
 
   <footer>
-    © 2024 Pedestrian Counter
+    © 2024 Mohamed Shamroukh (m.shamroukh@lboro.ac.uk)
   </footer>
-
 
   <script>
     let count = 0;
