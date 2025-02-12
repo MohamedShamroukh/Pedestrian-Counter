@@ -36,7 +36,7 @@ Contributions are welcome! Please feel free to submit pull requests with improve
 
 ## License
 
-This project is open source.  (Replace with the specific license you choose, e.g., MIT License)
+This project is open source. 
 
 ## Author
 
