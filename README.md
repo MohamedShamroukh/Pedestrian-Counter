@@ -2,6 +2,7 @@
 https://mohamedshamroukh.github.io/Pedestrian-Counter/
 
 A simple, elegant, and mobile-friendly web application for counting pedestrians in a specific area.  This application stores data locally and allows for exporting the count data as a CSV file.
+<img width="1854" height="866" alt="image" src="https://github.com/user-attachments/assets/1d4d3da7-9aa6-4577-9653-46b7bf9e77bc" />
 
 ## Features
 
