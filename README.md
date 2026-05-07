@@ -13,6 +13,7 @@ A simple, elegant, and mobile-friendly web application for counting pedestrians 
 *   **Area Name Input:** Prompts the user to enter an area name, which is used in the CSV export and displayed on the page.
 *   **Reset Functionality:**  Provides a button to reset the counter and clear the stored data (with an option to export the data first).
 *   **Timestamped Log:** Records the timestamp and count for each increment, displayed in a log area on the page.
+<img width="1847" height="855" alt="image" src="https://github.com/user-attachments/assets/1a2e708a-1e6c-4a22-b77d-654591377ee5" />
 
 ## Usage
 
