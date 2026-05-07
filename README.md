@@ -48,6 +48,7 @@ Mohamed Shamroukh
 m.shamroukh@lboro.ac.uk
 
 ## Example CSV Output
+<img width="403" height="409" alt="image" src="https://github.com/user-attachments/assets/d34f1cf9-e05e-4fab-9997-9542644c39ab" />
 
 The exported CSV file will contain the following columns:
 
